@@ -125,7 +125,23 @@ function moveUp() {
 }
 
 function moveDown() {
+    grid.moveDown(neighbourHood);
+    centerNode = neighbourHood[neighbourhoodRadius][neighbourhoodRadius];
+    $('.row:first').remove();
+    let lastRowTop = parseFloat($('.row:last').css('top'));
+    $('#grid').append($row.clone());
+    let newRowWidth = parseFloat($('.row:last').height());
+    $('.row:last').css('top',lastRowTop + newRowWidth);
+    for (let j=0;j<columns;j++){
+        let url = neighbourHood[neighbourHood.length-1][j].url;
+        let $newCell = $cell.clone().append('<img src="' + url + '" alt="">');
+        let cellWidth = 0;
+        if (j > 0) {
+            cellWidth = $('.row:last > .cell:first').width();
+        }
+        $('.row:last').append($newCell.css('left', cellWidth *j));
 
+    }
 }
 
 function checkKey(e) {
@@ -144,7 +160,9 @@ function checkKey(e) {
     }
     else if (e.keyCode == '40') {
         // down arrow
-        console.log($(".row:first").is(':offscreen'));
+        if($(".row:first").is(':offscreen')){
+            moveDown();
+        }
         $(".row").animate({
             top: '-='+movementDelta+'px'
         },movementDuration);

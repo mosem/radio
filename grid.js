@@ -113,11 +113,22 @@ class Grid{
     moveUp(neighbourhood) {
         var neighbourhoodWidth = neighbourhood[0].length;
         var neighbourhoodHeight = neighbourhood.length;
-        neighbourhood.shift();
+        neighbourhood.pop();
         neighbourhood.unshift(new Array());
         for (let j=0;j<neighbourhoodWidth;j++) {
             let topMostNode = neighbourhood[1][j].north;
             neighbourhood[0].push(topMostNode);
+        }
+    }
+
+    moveDown(neighbourhood) {
+        var neighbourhoodWidth = neighbourhood[0].length;
+        var neighbourhoodHeight = neighbourhood.length;
+        neighbourhood.shift();
+        neighbourhood.push(new Array());
+        for (let j=0;j<neighbourhoodWidth;j++) {
+            let bottomMostNode = neighbourhood[neighbourhoodHeight-2][j].south;
+            neighbourhood[neighbourhoodHeight-1].unshift(bottomMostNode);
         }
     }
 }
